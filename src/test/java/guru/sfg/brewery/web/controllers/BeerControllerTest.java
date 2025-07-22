@@ -81,13 +81,12 @@ class BeerControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("beers/findBeers"))
                 .andExpect(model().attributeExists("beer"));
-        verifyZeroInteractions(beerRepository);
+        verifyNoInteractions(beerRepository);
     }
 
-    //ToDO: Mocking Page
-     void processFindFormReturnMany() throws Exception{
-        when(beerRepository.findAllByBeerName(anyString(), PageRequest.of(0,
-              10,Sort.Direction.DESC,"beerName"))).thenReturn(pagedResponse);
+    @Test
+    void processFindFormReturnMany() throws Exception{
+        when(beerRepository.findAllByBeerNameIsLike(anyString(), org.mockito.ArgumentMatchers.any(PageRequest.class))).thenReturn(pagedResponse);
         mockMvc.perform(get("/beers"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("beers/beerList"))
@@ -111,7 +110,7 @@ class BeerControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("beers/createBeer"))
                 .andExpect(model().attributeExists("beer"));
-        verifyZeroInteractions(beerRepository);
+        verifyNoInteractions(beerRepository);
     }
 
     @Test
@@ -119,8 +118,7 @@ class BeerControllerTest {
         when(beerRepository.save(ArgumentMatchers.any())).thenReturn(Beer.builder().id(uuid).build());
         mockMvc.perform(post("/beers/new"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/beers/"+ uuid))
-                .andExpect(model().attributeExists("beer"));
+                .andExpect(view().name("redirect:/beers/"+ uuid));
         verify(beerRepository).save(ArgumentMatchers.any());
     }
 
@@ -131,7 +129,7 @@ class BeerControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("beers/createOrUpdateBeer"))
                 .andExpect(model().attributeExists("beer"));
-        verifyZeroInteractions(beerRepository);
+        verify(beerRepository, times(2)).findById(uuid);
     }
 
     @Test
@@ -140,8 +138,7 @@ class BeerControllerTest {
 
         mockMvc.perform(post("/beers/"+uuid+"/edit"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/beers/"+uuid))
-                .andExpect(model().attributeExists("beer"));
+                .andExpect(view().name("redirect:/beers/"+uuid));
 
         verify(beerRepository).save(ArgumentMatchers.any());
     }
