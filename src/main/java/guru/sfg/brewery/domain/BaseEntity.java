@@ -20,7 +20,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.*;
@@ -44,13 +43,9 @@ public class BaseEntity {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
 
+    @Id
+    @GeneratedValue(generator = "UUID", strategy = GenerationType.UUID)
     @Column(length = 36, columnDefinition = "varchar", updatable = false, nullable = false )
     private UUID id;
 
