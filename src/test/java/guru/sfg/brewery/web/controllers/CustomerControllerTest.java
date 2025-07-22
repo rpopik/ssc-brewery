@@ -20,7 +20,6 @@ package guru.sfg.brewery.web.controllers;
 import guru.sfg.brewery.domain.Customer;
 import guru.sfg.brewery.repositories.CustomerRepository;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
@@ -51,13 +50,12 @@ class CustomerControllerTest {
     CustomerController controller;
     List<Customer> customerList;
     UUID uuid;
-    Customer customer;
 
     MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {
-        customerList = new ArrayList<Customer>();
+        customerList = new ArrayList<>();
         customerList.add(Customer.builder().customerName("John Doe").build());
         customerList.add(Customer.builder().customerName("John Doe").build());
 
