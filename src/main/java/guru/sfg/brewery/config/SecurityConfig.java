@@ -73,8 +73,6 @@ public class SecurityConfig {
         return new ProviderManager(authenticationProvider);
     }
 
-
-
     @Bean
     protected UserDetailsService userDetailsService() {
         return jpaUserDetailsService;

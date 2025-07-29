@@ -59,9 +59,9 @@ public class PasswordEncodingTest {
         String encodedPassword = bcrypt.encode(PASSWORD);
         assertTrue(bcrypt.matches(PASSWORD, encodedPassword));
 
-        System.out.println(bcrypt.encode("guru"));;
-        System.out.println(bcrypt.encode("guruSecret"));;
-        System.out.println(bcrypt.encode("testApiKeyPassword"));;
+        System.out.println(bcrypt.encode("guru"));
+        System.out.println(bcrypt.encode("guruSecret"));
+        System.out.println(bcrypt.encode("testApiKeyPassword"));
 
     }
 }
