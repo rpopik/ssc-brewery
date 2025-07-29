@@ -58,8 +58,8 @@ public class SecurityConfig {
                                 .requestMatchers("/", "/webjars/**", "/resources/**").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/v1/beer/**").permitAll()
                                 .requestMatchers(HttpMethod.DELETE, "/api/v1/beer/**").hasRole("ADMIN")
-                                .requestMatchers(HttpMethod.GET, "/brewery/breweries/**").hasRole("CUSTOMER")
-                                .requestMatchers(HttpMethod.GET, "/brewery/api/v1/breweries").hasRole("CUSTOMER")
+                                .requestMatchers(HttpMethod.GET, "/brewery/breweries/**").hasAnyRole("ADMIN","CUSTOMER")
+                                .requestMatchers(HttpMethod.GET, "/brewery/api/v1/breweries").hasAnyRole("ADMIN","CUSTOMER")
                                 .anyRequest().authenticated()
 
                 )

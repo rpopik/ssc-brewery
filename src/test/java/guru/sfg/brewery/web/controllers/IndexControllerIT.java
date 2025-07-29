@@ -15,7 +15,5 @@ public class IndexControllerIT extends BaseTest{
         mockMvc.perform(get("/")
                         .with(httpBasic("spring", "guru")))
                 .andExpect(status().isOk());
-
     }
-
 }
