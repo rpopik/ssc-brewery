@@ -78,21 +78,21 @@ public class BeerControllerIT extends BaseTest {
     void testDeleteBeerWithBasicAuthUserRole() throws Exception {
         mockMvc.perform(delete("/api/v1/beer/123e4567-e89b-12d3-a456-426614174000")
                         .with(httpBasic("user", "password")))
-                .andExpect(status().isNoContent());
+                .andExpect(status().isForbidden());
     }
 
     @Test
     void testDeleteBeerWithBasicAuthCustomerRole() throws Exception {
         mockMvc.perform(delete("/api/v1/beer/123e4567-e89b-12d3-a456-426614174000")
                         .with(httpBasic("scott", "tiger")))
-                .andExpect(status().isNoContent());
+                .andExpect(status().isForbidden());
     }
 
     @Test
     void testDeleteBeerWithHeaderParams() throws Exception {
         mockMvc.perform(delete("/api/v1/beer/123e4567-e89b-12d3-a456-426614174000")
-                        .header("Api-Key", "testApiKey")
-                        .header("Api-Secret", "testApiKeyPassword"))
+                        .header("Api-Key", "spring")
+                        .header("Api-Secret", "guru"))
                 .andExpect(status().isNoContent());
     }
 

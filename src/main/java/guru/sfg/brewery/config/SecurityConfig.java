@@ -57,6 +57,9 @@ public class SecurityConfig {
                                 .requestMatchers("/h2-console/**").permitAll() // do not use in production
                                 .requestMatchers("/", "/webjars/**", "/resources/**").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/v1/beer/**").permitAll()
+                                .requestMatchers(HttpMethod.DELETE, "/api/v1/beer/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/brewery/breweries/**").hasRole("CUSTOMER")
+                                .requestMatchers(HttpMethod.GET, "/brewery/api/v1/breweries").hasRole("CUSTOMER")
                                 .anyRequest().authenticated()
 
                 )
