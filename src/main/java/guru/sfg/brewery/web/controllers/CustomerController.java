@@ -19,7 +19,10 @@ package guru.sfg.brewery.web.controllers;
 
 import guru.sfg.brewery.domain.Customer;
 import guru.sfg.brewery.repositories.CustomerRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,7 +32,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import jakarta.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -47,6 +49,7 @@ public class CustomerController {
         return "customers/findCustomers";
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_CUSTOMER"})
     @GetMapping
     public String processFindFormReturnMany(Customer customer, BindingResult result, Model model){
         // find customers by name
@@ -58,7 +61,7 @@ public class CustomerController {
             return "customers/findCustomers";
         } else if (customers.size() == 1) {
             // 1 customer found
-            customer = customers.get(0);
+            customer = customers.getFirst();
             return "redirect:/customers/" + customer.getId();
         } else {
             // multiple customers found
@@ -75,12 +78,14 @@ public class CustomerController {
         return mav;
     }
 
+
     @GetMapping("/new")
     public String initCreationForm(Model model) {
         model.addAttribute("customer", Customer.builder().build());
         return "customers/createCustomer";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/new")
     public String processCreationForm(Customer customer) {
         //ToDO: Add Service

@@ -38,4 +38,9 @@ public abstract class BaseTest {
                 Arguments.of("user", "password"));
     }
 
+    public static Stream<Arguments> getStreamAdminCustomer() {
+        return Stream.of(Arguments.of("spring", "guru"),
+                Arguments.of("scott", "tiger"));
+    }
+
 }
