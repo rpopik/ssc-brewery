@@ -60,11 +60,11 @@ public class SecurityConfig {
                                 .requestMatchers("/h2-console/**").permitAll() // do not use in production
                                 .requestMatchers("/", "/webjars/**", "/resources/**").permitAll()
                                 .requestMatchers("/beers/find", "/beers/{beerId}").hasAnyRole("ADMIN","CUSTOMER", "USER")
-                                .requestMatchers(HttpMethod.GET, "/api/v1/beer/**").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/api/v1/beerUpc/{upc}").hasAnyRole("ADMIN","CUSTOMER", "USER")
-                                .requestMatchers(HttpMethod.DELETE, "/api/v1/beer/**").hasRole("ADMIN")
+//                                .requestMatchers(HttpMethod.GET, "/api/v1/beer/**").permitAll()
+//                                .requestMatchers(HttpMethod.GET, "/api/v1/beerUpc/{upc}").hasAnyRole("ADMIN","CUSTOMER", "USER")
+//                                .requestMatchers(HttpMethod.DELETE, "/api/v1/beer/**").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.GET, "/brewery/breweries/**").hasAnyRole("ADMIN","CUSTOMER")
-                                .requestMatchers(HttpMethod.GET, "/brewery/api/v1/breweries").hasAnyRole("ADMIN","CUSTOMER")
+//                                .requestMatchers(HttpMethod.GET, "/brewery/api/v1/breweries").hasAnyRole("ADMIN","CUSTOMER")
                                 .anyRequest().authenticated()
 
                 )

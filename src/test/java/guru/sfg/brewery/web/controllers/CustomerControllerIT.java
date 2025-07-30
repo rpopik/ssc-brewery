@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-public class CustomerControllerIT extends BaseTest{
+public class CustomerControllerIT extends BaseIT {
 
     @DisplayName("List Customers")
     @Nested

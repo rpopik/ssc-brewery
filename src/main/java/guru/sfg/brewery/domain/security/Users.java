@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @NoArgsConstructor
@@ -19,11 +20,21 @@ public class Users {
     private String password;
 
     @Singular
-    @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(name = "user_authority",
+    @ManyToMany(cascade = {CascadeType.MERGE, }, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "USERS_ID", referencedColumnName = "ID"),
-            inverseJoinColumns = @JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID"))
+            inverseJoinColumns = @JoinColumn(name = "ROLE_ID", referencedColumnName = "ID"))
+    private Set<Role> roles;
+
+    @Transient
     private Set<Authority> authorities;
+
+    public Set<Authority> getAuthorities() {
+        return this.roles.stream()
+                .map(Role::getAuthorities)
+                .flatMap(Set::stream)
+                .collect(Collectors.toSet());
+    }
 
     @Builder.Default
     private boolean accountNonExpired = true;

@@ -8,7 +8,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-public class BreweryControllerIT extends BaseTest{
+public class BreweryControllerIT extends BaseIT {
 
     @Test
     void testGetBreweriesJSONWithCustomerRole() throws Exception {

@@ -8,7 +8,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-public class IndexControllerIT extends BaseTest{
+public class IndexControllerIT extends BaseIT {
 
     @Test
     void testGetIndexSlash() throws Exception {

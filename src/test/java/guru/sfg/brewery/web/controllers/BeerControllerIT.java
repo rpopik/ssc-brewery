@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class BeerControllerIT extends BaseTest {
+public class BeerControllerIT extends BaseIT {
 
     @Autowired
     BeerRepository beerRepository;
