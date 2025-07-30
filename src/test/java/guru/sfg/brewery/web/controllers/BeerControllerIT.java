@@ -110,10 +110,6 @@ public class BeerControllerIT extends BaseTest {
         }
     }
 
-
-
-
-
     @Test
     void securityConfigIsLoaded() {
         assertNotNull(wac.getBean(SecurityConfig.class));
@@ -145,7 +141,7 @@ public class BeerControllerIT extends BaseTest {
                     .minOnHand(250)
                     .quantityToBrew(0)
                     .build());
-        };
+        }
 
         @Test
         void testDeleteBeerWithBasicAuth() throws Exception {

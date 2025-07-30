@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
 //@SpringBootTest
-public class BaseTest {
+public abstract class BaseTest {
 
     @Autowired
     WebApplicationContext wac;
