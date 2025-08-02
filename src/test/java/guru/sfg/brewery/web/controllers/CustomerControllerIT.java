@@ -44,7 +44,7 @@ public class CustomerControllerIT extends BaseIT {
     @Nested
     class AddCustomers {
 
-        @Rollback
+//        @Rollback
         @Test
         void processCreationForm() throws Exception {
             mockMvc.perform(post("/customers/new")
