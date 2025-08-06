@@ -15,7 +15,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -75,14 +74,14 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider(this.userDetailsService());
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider(this.jpaUserDetailsService);
         authenticationProvider.setPasswordEncoder(this.passwordEncoder());
         return new ProviderManager(authenticationProvider);
     }
 
-    @Bean
-    protected UserDetailsService userDetailsService() {
-        return jpaUserDetailsService;
+//    @Bean
+//    protected UserDetailsService userDetailsService() {
+//        return jpaUserDetailsService;
 //        return new InMemoryUserDetailsManager(
 //                User.withUsername("spring")
 //                        .password("{bcrypt}$2a$16$Ywy6irwTdCho5/oMIvm4AObJ5Pft3N5OOPNZuTqH1bYqtg3YC.GZq")
@@ -101,7 +100,7 @@ public class SecurityConfig {
 //                        .roles("API_KEY")
 //                        .build()
 //        );
-    }
+//    }
 
     @Bean
     PasswordEncoder passwordEncoder() {

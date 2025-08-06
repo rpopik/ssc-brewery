@@ -1,53 +1,18 @@
-/*
- *  Copyright 2020 the original author or authors.
- *
- * This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *
- *     You should have received a copy of the GNU General Public License
- *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
-
 package guru.sfg.brewery.web.controllers;
 
-import guru.sfg.brewery.domain.Brewery;
-import guru.sfg.brewery.domain.security.perms.BreweryReadPerm;
-import guru.sfg.brewery.services.BreweryService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+public interface BreweryController {
 
-import java.util.List;
+    String BREWERY_BASE_URL = "/brewery";
 
+    String BREWERIES_PATH = "/breweries";
 
-@RequiredArgsConstructor
-@RequestMapping("/brewery")
-@Controller
-public class BreweryController {
+    String BREWERY_INDEX_PATH = "/breweries/index";
 
-    private final BreweryService breweryService;
+    String BREWERY_IDX_HTML_PATH = "/breweries/index.html";
 
-    @BreweryReadPerm
-    @GetMapping({"/breweries", "/breweries/index", "/breweries/index.html", "/breweries.html"})
-    public String listBreweries(Model model) {
-        model.addAttribute("breweries", breweryService.getAllBreweries());
-        return "breweries/index";
-    }
+    String BREWERIES_HTML_PATH = "/breweries.html";
 
-    @BreweryReadPerm
-    @GetMapping("/api/v1/breweries")
-    public @ResponseBody
-    List<Brewery> getBreweriesJson(){
-        return breweryService.getAllBreweries();
-    }
+    String BREWERIES_JSON_API_PATH = "/api/v1/breweries";
+
+    String BREWERIES_MODEL_ATTR = "breweries";
 }

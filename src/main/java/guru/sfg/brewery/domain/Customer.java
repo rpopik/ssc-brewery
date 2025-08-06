@@ -16,14 +16,13 @@
  */
 package guru.sfg.brewery.domain;
 
+import guru.sfg.brewery.domain.security.Users;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
 import java.sql.Timestamp;
 import java.util.Set;
 import java.util.UUID;
@@ -53,5 +52,8 @@ public class Customer extends BaseEntity {
 
     @OneToMany(mappedBy = "customer")
     private Set<BeerOrder> beerOrders;
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Users> users;
 
 }

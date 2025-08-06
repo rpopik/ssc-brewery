@@ -17,6 +17,7 @@
 
 package guru.sfg.brewery.web.model;
 
+import guru.sfg.brewery.domain.OrderStatusEnum;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
