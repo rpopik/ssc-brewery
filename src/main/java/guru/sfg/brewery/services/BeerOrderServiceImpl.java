@@ -90,9 +90,14 @@ public class BeerOrderServiceImpl implements BeerOrderService {
         Optional<Customer> customerOptional = customerRepository.findById(customerId);
 
         if (customerOptional.isPresent()) {
+            Customer customer = customerOptional.get();
+
+            if (!customer.getId().equals(beerOrderDto.getCustomerId())){
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+            }
             BeerOrder beerOrder = beerOrderMapper.dtoToBeerOrder(beerOrderDto);
             beerOrder.setId(null); //should not be set by outside client
-            beerOrder.setCustomer(customerOptional.get());
+            beerOrder.setCustomer(customer);
             beerOrder.setOrderStatus(OrderStatusEnum.NEW);
             beerOrder.getBeerOrderLines().forEach(line -> line.setBeerOrder(beerOrder));
 
