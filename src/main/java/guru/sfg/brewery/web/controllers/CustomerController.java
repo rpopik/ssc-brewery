@@ -18,10 +18,10 @@
 package guru.sfg.brewery.web.controllers;
 
 import guru.sfg.brewery.domain.Customer;
-import guru.sfg.brewery.domain.security.perms.CustomerCreatePerm;
-import guru.sfg.brewery.domain.security.perms.CustomerReadPerm;
-import guru.sfg.brewery.domain.security.perms.CustomerUpdatePerm;
 import guru.sfg.brewery.repositories.CustomerRepository;
+import guru.sfg.brewery.security.perms.CustomerCreatePerm;
+import guru.sfg.brewery.security.perms.CustomerReadPerm;
+import guru.sfg.brewery.security.perms.CustomerUpdatePerm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

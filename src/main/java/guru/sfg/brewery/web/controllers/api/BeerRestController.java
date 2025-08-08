@@ -17,10 +17,10 @@
 
 package guru.sfg.brewery.web.controllers.api;
 
-import guru.sfg.brewery.domain.security.perms.BeerCreatePermission;
-import guru.sfg.brewery.domain.security.perms.BeerDeletePermission;
-import guru.sfg.brewery.domain.security.perms.BeerReadPermission;
-import guru.sfg.brewery.domain.security.perms.BeerUpdatePermission;
+import guru.sfg.brewery.security.perms.BeerCreatePermission;
+import guru.sfg.brewery.security.perms.BeerDeletePermission;
+import guru.sfg.brewery.security.perms.BeerReadPermission;
+import guru.sfg.brewery.security.perms.BeerUpdatePermission;
 import guru.sfg.brewery.services.BeerService;
 import guru.sfg.brewery.web.model.BeerDto;
 import guru.sfg.brewery.web.model.BeerPagedList;

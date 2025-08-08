@@ -18,7 +18,7 @@
 package guru.sfg.brewery.web.controllers;
 
 import guru.sfg.brewery.domain.Brewery;
-import guru.sfg.brewery.domain.security.perms.BreweryReadPerm;
+import guru.sfg.brewery.security.perms.BreweryReadPerm;
 import guru.sfg.brewery.services.BreweryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

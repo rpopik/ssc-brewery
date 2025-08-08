@@ -1,5 +1,8 @@
 package guru.sfg.brewery.web.controllers.api;
 
+import guru.sfg.brewery.security.perms.BeerOrderCreatePermission;
+import guru.sfg.brewery.security.perms.BeerOrderPickupPermission;
+import guru.sfg.brewery.security.perms.BeerOrderReadPermission;
 import guru.sfg.brewery.services.BeerOrderService;
 import guru.sfg.brewery.web.model.BeerOrderDto;
 import guru.sfg.brewery.web.model.BeerOrderPagedList;
@@ -24,10 +27,11 @@ public class BeerOrderControllerImpl implements BeerOrderController{
         this.beerOrderService = beerOrderService;
     }
 
+    @BeerOrderReadPermission
     @GetMapping(BEER_ORDER_PATH)
     public BeerOrderPagedList listOrders(@PathVariable UUID customerId,
-                                         @RequestParam Integer pageNumber,
-                                         @RequestParam Integer pageSize){
+                                         @RequestParam(required = false) Integer pageNumber,
+                                         @RequestParam(required = false) Integer pageSize){
         if (pageNumber == null || pageNumber < 0){
             pageNumber = DEFAULT_PAGE_NUMBER;
         }
@@ -38,17 +42,20 @@ public class BeerOrderControllerImpl implements BeerOrderController{
         return beerOrderService.listOrders(customerId, PageRequest.of(pageNumber, pageSize));
     }
 
+    @BeerOrderCreatePermission
     @PostMapping(BEER_ORDER_PATH)
     @ResponseStatus(HttpStatus.CREATED)
     public BeerOrderDto placeOrder(@PathVariable UUID customerId, @RequestBody BeerOrderDto beerOrderDto){
         return beerOrderService.placeOrder(customerId, beerOrderDto);
     }
 
+    @BeerOrderReadPermission
     @GetMapping(BEER_ORDER_ID_PATH)
     public BeerOrderDto getOrder(@PathVariable UUID customerId, @PathVariable UUID orderId){
         return beerOrderService.getOrderById(customerId, orderId);
     }
 
+    @BeerOrderPickupPermission
     @PutMapping(BEER_ORDER_PICKUP_PATH)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void pickupOrder(@PathVariable UUID customerId, @PathVariable UUID orderId){

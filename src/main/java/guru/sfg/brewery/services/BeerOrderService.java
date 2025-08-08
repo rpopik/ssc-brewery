@@ -21,6 +21,7 @@ package guru.sfg.brewery.services;
 import guru.sfg.brewery.web.model.BeerOrderDto;
 import guru.sfg.brewery.web.model.BeerOrderPagedList;
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -32,4 +33,14 @@ public interface BeerOrderService {
     BeerOrderDto getOrderById(UUID customerId, UUID orderId);
 
     void pickupOrder(UUID customerId, UUID orderId);
+
+    BeerOrderPagedList listOrders(Pageable pageable
+    );
+
+    BeerOrderDto getOrderById(UUID orderId);
+
+    @Transactional
+    void pickupOrder(UUID orderId);
+
+    BeerOrderDto placeOrder(BeerOrderDto beerOrderDto);
 }
