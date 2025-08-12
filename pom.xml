@@ -29,6 +29,14 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
+    <!--    <repositories>-->
+    <!--        <repository>-->
+    <!--            <id>mvn-repository</id>-->
+    <!--            <name>Mvn Repository</name>-->
+    <!--            <url>https://jcenter.bintray.com/</url>-->
+    <!--        </repository>-->
+    <!--    </repositories>-->
+
     <groupId>guru.springframework</groupId>
     <artifactId>scc-brewery</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -66,10 +74,10 @@
         <!--Surefire plugin argLine value to suppress UnresolvedMavenProperty -->
         <!-- Removed unsupported JVM argument -->
         <!-- Web dependencies -->
-        <webjars-bootstrap.version>3.3.6</webjars-bootstrap.version>
-        <webjars-jquery-ui.version>1.12.1</webjars-jquery-ui.version>
-        <webjars-jquery.version>3.3.0</webjars-jquery.version>
-        <wro4j.version>1.8.0</wro4j.version>
+        <webjars-bootstrap.version>5.3.7</webjars-bootstrap.version>
+        <webjars-jquery-ui.version>1.14.1</webjars-jquery-ui.version>
+        <webjars-jquery.version>3.7.1</webjars-jquery.version>
+        <wro4j.version>2.1.1</wro4j.version>
     </properties>
 
     <dependencies>
@@ -165,37 +173,51 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
             <plugin>
-                <groupId>ro.isdc.wro4j</groupId>
-                <artifactId>wro4j-maven-plugin</artifactId>
-                <version>${wro4j.version}</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
                     <execution>
+                        <id>unpack-bootstrap-sass</id>
                         <phase>generate-resources</phase>
                         <goals>
-                            <goal>run</goal>
+                            <goal>unpack</goal>
                         </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.webjars</groupId>
+                                    <artifactId>bootstrap</artifactId>
+                                    <version>5.3.7</version>
+                                    <type>jar</type>
+                                </artifactItem>
+                            </artifactItems>
+                            <outputDirectory>${project.build.directory}/sass-deps</outputDirectory>
+                        </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>io.github.cleydyr</groupId>
+                <artifactId>dart-sass-maven-plugin</artifactId>
+                <version>1.5.0</version> <!-- Use the latest version available -->
                 <configuration>
-                    <wroManagerFactory>ro.isdc.wro.maven.plugin.manager.factory.ConfigurableWroManagerFactory
-                    </wroManagerFactory>
-                    <cssDestinationFolder>${project.build.directory}/classes/static/resources/css</cssDestinationFolder>
-                    <wroFile>${basedir}/src/main/wro/wro.xml</wroFile>
-                    <extraConfigFile>${basedir}/src/main/wro/wro.properties</extraConfigFile>
-                    <contextFolder>${basedir}/src/main/less</contextFolder>
+                    <version>1.90.0</version>
                 </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.webjars</groupId>
-                        <artifactId>bootstrap</artifactId>
-                        <version>${webjars-bootstrap.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.mockito</groupId>
-                        <artifactId>mockito-core</artifactId>
-                        <version>2.23.4</version>
-                    </dependency>
-                </dependencies>
+                <executions>
+                    <execution>
+                        <id>sass-compile</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>compile-sass</goal>
+                        </goals>
+                        <configuration>
+                            <inputFolder>${project.basedir}/src/main/sass</inputFolder>
+                            <outputFolder>${project.build.directory}/classes/static/resources/css</outputFolder>
+                            <loadPaths>${project.build.directory}/sass-deps</loadPaths>
+                            <stopOnError>true</stopOnError>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

@@ -8,7 +8,7 @@
 }
 
 .navbar a.navbar-brand {
-  background: url("../images/spring-logo-dataflow.png") -1px -1px no-repeat;
+  background: url("../images/platform-bg.png") -1px -1px no-repeat;
   margin: 12px 0 6px;
   width: 229px;
   height: 46px;
@@ -37,7 +37,7 @@
   text-shadow: none;
   font-size: 14px;
 
-/* line-height: 14px; */
+  /* line-height: 14px; */
   padding: 28px 20px;
   transition: all 0.15s;
   -webkit-transition: all 0.15s;
@@ -48,6 +48,8 @@
 
 .navbar li > a {
   text-transform: uppercase;
+  text-decoration: none;
+  color: gray;
 }
 
 .navbar .navbar-text {
@@ -57,6 +59,17 @@
 .navbar li:hover > a {
   color: #eeeeee;
   background-color: #6db33f;
+}
+
+.navbar-nav {
+  display: flex;
+}
+
+.navbar-nav li {
+  display: flex;
+  padding: 28px 20px;
+  //background-color: darkgreen;
+  //color: white;
 }
 
 .navbar-toggle {
@@ -69,5 +82,4 @@
     width: 19px;
     height: 3px;
   }
-
 }

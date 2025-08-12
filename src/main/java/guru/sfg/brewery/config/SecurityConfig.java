@@ -13,7 +13,6 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
@@ -53,16 +52,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
         PathPatternRequestMatcher apiMatcher = PathPatternRequestMatcher.withDefaults().matcher("/api/**");
         http
-                .csrf(AbstractHttpConfigurer::disable)
+//                .csrf(AbstractHttpConfigurer::disable)
                 .addFilterBefore(restHeaderAuthFilter(apiMatcher, authenticationManager), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(restUrlAuthFilter(apiMatcher, authenticationManager), UsernamePasswordAuthenticationFilter.class);
-
-        http
-                .csrf(AbstractHttpConfigurer::disable)
+                .addFilterBefore(restUrlAuthFilter(apiMatcher, authenticationManager), UsernamePasswordAuthenticationFilter.class)
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**", "/api/**"))
                 .authorizeHttpRequests((authorizeHttpRequests) ->
                         authorizeHttpRequests
                                 .requestMatchers("/h2-console/**").permitAll() // do not use in production
-                                .requestMatchers("/", "/webjars/**", "/resources/**").permitAll()
+                                .requestMatchers("/", "/login", "/webjars/**", "/resources/**").permitAll()
 //                                .requestMatchers("/beers/find", "/beers/{beerId}").hasAnyRole("ADMIN","CUSTOMER", "USER")
 //                                .requestMatchers(HttpMethod.GET, "/api/v1/beer/**").permitAll()
 //                                .requestMatchers(HttpMethod.GET, "/api/v1/beerUpc/{upc}").hasAnyRole("ADMIN","CUSTOMER", "USER")
