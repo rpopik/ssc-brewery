@@ -1,5 +1,7 @@
 <!doctype html>
-<html th:fragment="layout (template, menu)">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:fragment="layout (template, menu)">
 
 <head>
 
@@ -46,13 +48,13 @@
                     <span>Home</span>
                 </li>
 
-                <li th:replace="::menuItem ('/customers/find','customers','find customers','search','Customers')"class="nav-item">
+                <li sec:authorize="hasAuthority('customer.create')" th:replace="::menuItem ('/customers/find','customers','find customers','search','Customers')"class="nav-item">
                 </li>
 
                 <li th:replace="::menuItem ('/beers/find','beers','find beers','search','Find beers')" class="nav-item">
                 </li>
 
-                <li th:replace="::menuItem ('/brewery/breweries','breweries','breweries','building','Breweries')" class="nav-item">
+                <li sec:authorize="(hasAnyAuthority('order.read','customer.order.read'))" th:replace="::menuItem ('/brewery/breweries','breweries','breweries','building','Breweries')" class="nav-item">
                 </li>
             </ul>
         </div>
