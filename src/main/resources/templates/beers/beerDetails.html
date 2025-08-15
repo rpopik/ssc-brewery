@@ -16,25 +16,25 @@
     </tr>
     <tr>
         <th>Style</th>
-        <td th:text="*{beerStyle}" /></td>
+        <td th:text="*{beerStyle}"></td>
     </tr>
     <tr>
         <th>Price</th>
-        <td th:text="*{price}" /></td>
+        <td th:text="*{price}"></td>
     </tr>
     <tr>
         <th>Min on Hand</th>
-        <td th:text="*{minOnHand}" /></td>
+        <td th:text="*{minOnHand}"></td>
     </tr>
     <tr>
         <th>Quantity to Brew</th>
-        <td th:text="*{quantityToBrew}" /></td>
+        <td th:text="*{quantityToBrew}"></td>
     </tr>
 </table>
 
-<a th:href="@{{id}/edit(id=${beer.id})}" class="btn btn-default">Edit
+<a th:href="@{{id}/edit(id=${beer.id})}" class="btn btn-secondary">Edit
     Beer</a>
-<!--<a th:href="@{{id}/pets/new(id=${beer.id})}" class="btn btn-default">Delete-->
+<!--<a th:href="@{{id}/pets/new(id=${beer.id})}" class="btn btn-secondary">Delete-->
     <!--Beer</a>-->
 
 <br />
@@ -46,9 +46,9 @@
 
     <tr th:each="beerInventory : ${beer.beerInventory}">
         <td valign="top">
-            <dl class="dl-horizontal">
-                <dt>Quantity on Hand</dt>
-                <dd th:text="${beerInventory.quantityOnHand}" /></dd>
+            <dl class="row mb-0">
+                <dt class="col-sm-5">Quantity on Hand</dt>
+                <dd class="col-sm-7" th:text="${beerInventory.quantityOnHand}"></dd>
             </dl>
     </tr>
 </table>

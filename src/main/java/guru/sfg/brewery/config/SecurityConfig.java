@@ -7,6 +7,7 @@ import guru.sfg.brewery.security.SfgPasswordEncoderFactories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -69,7 +70,18 @@ public class SecurityConfig {
                                 .anyRequest().authenticated()
 
                 )
-                .formLogin(withDefaults())
+                .formLogin(loginConfigurer -> {
+                    loginConfigurer
+                            .loginProcessingUrl("/login")
+                            .loginPage("/").permitAll()
+                            .successForwardUrl("/")
+                            .defaultSuccessUrl("/");
+                })
+                .logout(logoutConfigurer -> {
+                    logoutConfigurer
+                            .logoutRequestMatcher(PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, "/logout"))
+                            .logoutSuccessUrl("/?logout").permitAll();
+                })
                 .httpBasic(withDefaults());
         http.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)); // do not use in production, allows H2 console to work
         return http.build();

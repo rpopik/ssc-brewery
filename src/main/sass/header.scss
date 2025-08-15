@@ -18,10 +18,10 @@
 }
 
 .navbar a.navbar-brand span {
-  display: block;
+  display: flex;
   width: 229px;
   height: 46px;
-  background: url("../images/spring-logo-dataflow.png") -1px -48px no-repeat;
+  background: url("../images/platform-bg.png") -1px -48px no-repeat;
   opacity: 0;
   -moz-transition: opacity 0.12s ease-in-out;
   -webkit-transition: opacity 0.12s ease-in-out;
@@ -30,20 +30,6 @@
 
 .navbar a:hover.navbar-brand span {
   opacity: 1;
-}
-
-.navbar li > a, .navbar-text {
-  font-family: "montserratregular", sans-serif;
-  text-shadow: none;
-  font-size: 14px;
-
-  /* line-height: 14px; */
-  padding: 28px 20px;
-  transition: all 0.15s;
-  -webkit-transition: all 0.15s;
-  -moz-transition: all 0.15s;
-  -o-transition: all 0.15s;
-  -ms-transition: all 0.15s;
 }
 
 .navbar li > a {
@@ -61,24 +47,23 @@
   background-color: #6db33f;
 }
 
-.navbar-nav {
-  display: flex;
+.navbar .nav-item .nav-link {
+  text-transform: uppercase;
+  text-decoration: none;
+  color: gray;
+  padding: 28px 20px; // If you truly want that large padding
 }
 
-.navbar-nav li {
-  display: flex;
-  padding: 28px 20px;
-  //background-color: darkgreen;
-  //color: white;
+.navbar .nav-item .nav-link:hover {
+  color: #eee;
+  background-color: #6db33f; // If you want a hover background in navbar
 }
 
-.navbar-toggle {
+.navbar-toggler {
   border-width: 0;
 
-  .icon-bar + .icon-bar {
+  .navbar-toggler-icon{
     margin-top: 3px;
-  }
-  .icon-bar {
     width: 19px;
     height: 3px;
   }

@@ -13,50 +13,98 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// @import "META-INF/resources/webjars/bootstrap/5.3.7/scss/functions";
-// @import "META-INF/resources/webjars/bootstrap/5.3.7/scss/mixins";
-// @import "META-INF/resources/webjars/bootstrap/5.3.7/scss/variables";
-// @import "META-INF/resources/webjars/bootstrap/5.3.7/scss/variables-dark";
-// @import "META-INF/resources/webjars/bootstrap/5.3.7/scss/maps";
-// @import "META-INF/resources/webjars/bootstrap/5.3.7/scss/bootstrap";
+@use "../../../node_modules/bootstrap/scss/bootstrap";
+// Update the import directory to point to it‘s location within node_modules
 
-$icon-font-path: "../../webjars/bootstrap/fonts/";
+@use "../../../node_modules/bootstrap-icons/font/bootstrap-icons" with (
+  $bootstrap-icons-font-dir: "../fonts"
+);
 
+// Custom Colors (these are your base colors)
 $spring-green: #6db33f;
 $spring-dark-green: #5fa134;
 $spring-brown: #34302d;
 $spring-grey: #838789;
 $spring-light-grey: #f1f1f1;
 
-$body-bg: $spring-light-grey;
+// Map your custom colors to Bootstrap's grayscale system or theme colors
+// This allows you to leverage Bootstrap's utility classes and components with your custom palette.
+$gray-100: $spring-light-grey;
+$gray-600: $spring-grey;
+$gray-700: $spring-brown;
+$white: #FFF;
+
+// Base Bootstrap 5.3.7 variables for customization
+// These should be placed in your custom Sass file *before* importing Bootstrap's main files.
+
+// Body
+$body-bg: $gray-100; // Background color for the <body>
+$body-color: $gray-700; // Default text color for the <body>
 $text-color: $spring-brown;
-$link-color: $spring-dark-green;
-$link-hover-color: $spring-dark-green;
 
-$navbar-default-link-color: $spring-light-grey;
-$navbar-default-link-active-color: $spring-light-grey;
-$navbar-default-link-hover-color: $spring-light-grey;
-$navbar-default-link-hover-bg: $spring-green;
-$navbar-default-toggle-icon-bar-bg: $spring-light-grey;
-$navbar-default-toggle-hover-bg: transparent;
-$navbar-default-link-active-bg: $spring-green;
+// Links
+$link-color: $spring-dark-green; // Default link color
+$link-decoration: none; // No underline by default, can be added with .link-underline utility
+$link-hover-color: darken($link-color, 15%); // Hover link color
 
-$border-radius-base: 0;
-$border-radius-large: 0;
-$border-radius-small: 0;
+// Navbar
+// Bootstrap 5 uses theme colors ($primary, $secondary, etc.) or utility classes (bg-primary, text-light)
+// to style the navbar. You would typically use classes like `navbar-light` or `navbar-dark`
+// along with background and text utilities in your HTML.
+// You can customize the colors of these themes directly:
+$navbar-light-color: rgba($gray-700, .7); // Text color for `.navbar-light`
+$navbar-light-hover-color: rgba($gray-700, .9);
+$navbar-light-active-color: rgba($gray-700, 1);
+$navbar-light-bg: $gray-100;
 
-$btn-default-color: $spring-light-grey;
-$btn-default-bg: $spring-brown;
-$btn-default-border: $spring-green;
+$navbar-dark-color: rgba($white, .7); // Text color for `.navbar-dark`
+$navbar-dark-hover-color: rgba($white, .9);
+$navbar-dark-active-color: rgba($white, 1);
+$navbar-dark-bg: $spring-brown; // Background for `.navbar-dark`
 
-$nav-tabs-active-link-hover-color: $spring-light-grey;
-$nav-tabs-active-link-hover-bg: $spring-brown;
-$nav-tabs-active-link-hover-border-color: $spring-brown;
+// Navbar Toggler (Hamburger Icon)
+// The toggler icon is now an SVG. You can customize its color by changing the SVG `stroke` color.
+// This example sets the stroke color to your `$spring-light-grey`.
+$navbar-toggler-icon-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='#{$spring-light-grey}' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+
+// Border Radius
+$border-radius: 0; // Default border-radius for components
+$border-radius-sm: 0; // Small border-radius
+$border-radius-lg: 0; // Large border-radius
+
+// Buttons
+// Bootstrap 5 encourages using theme colors (primary, secondary, etc.) for buttons.
+// You can define your theme colors:
+$primary: $spring-green;
+$secondary: $spring-brown;
+
+// Then Bootstrap automatically generates button styles based on these.
+// For example, to style a button with $primary:
+$btn-primary-color: color-contrast($primary); // Automatically choose contrasting text color
+$btn-primary-bg: $primary;
+$btn-primary-border-color: $primary;
+
+// For the effect of `$btn-default-*`:
+// You could create a custom button style in your Sass if you need a "default" button separate from Bootstrap's theme buttons.
+// Or, if you use `$secondary` as your default-like color:
+$btn-secondary-color: $spring-light-grey; // Text color
+$btn-secondary-bg: $spring-brown;       // Background color
+$btn-secondary-border-color: $spring-green; // Border color
+
+// Nav Tabs
 $nav-tabs-border-color: $spring-brown;
+$nav-tabs-link-hover-border-color: transparent; // Often transparent on hover in Bootstrap 5
+$nav-tabs-link-active-color: $spring-light-grey; // Active link text color
+$nav-tabs-link-active-bg: $spring-brown;         // Active link background
+$nav-tabs-link-active-border-color: $spring-brown; // Active link bottom border
 
-$pagination-active-bg: $spring-brown;
-$pagination-active-border: $spring-green;
-$table-border-color: $spring-brown;
+// Pagination
+$pagination-active-bg: $spring-brown; // Background for active pagination item
+$pagination-active-border-color: $spring-green; // Border for active pagination item
+
+// Tables
+$table-border-color: $spring-brown; // Color for table borders
+
 
 .table > thead > tr > th {
   background-color: color.adjust($spring-brown, $lightness: 3%, $space: hsl);
@@ -72,7 +120,7 @@ $table-border-color: $spring-brown;
   color: $spring-grey;
 }
 
-.btn-default {
+.btn-secondary {
   border-width: 2px;
   transition: border 0.15s;
   -webkit-transition: border 0.15s;
@@ -161,7 +209,7 @@ table td.action-column {
   width: 1px;
 }
 
-.help-block {
+.form-text {
   color: color.adjust(
     $text-color,
     $lightness: 50%,
@@ -182,7 +230,7 @@ table td.action-column {
   display: block;
 }
 
-.cluster-view .input-group-addon {
+.cluster-view .input-group-text {
   width: 0%;
 }
 

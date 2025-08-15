@@ -23,42 +23,36 @@
 
 <body>
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary" role="navigation">
+<nav class="navbar navbar-expand-lg bg-body-dark" role="navigation">
     <div class="container-fluid">
         <a class="navbar-brand" th:href="@{/}"><span></span></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-navbar"
+                aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="navbar-collapse collapse" id="main-navbar">
-            <ul class="navbar-nav me-5 ms-auto">
-                <li th:fragment="menuItem (path,active,title,glyph,text)" class="nav-item active"
-                    th:class="${active==menu ? 'active' : ''}">
-                    <a th:href="@{__${path}__}" th:title="${title}" class="nav-link">
-                        <span th:class="'glyphicon  glyphicon-'+${glyph}" class="glyphicon glyphicon-home"
-                              aria-hidden="true"></span>
+            <ul class="navbar-nav justify-content-end">
+                <li th:fragment="menuItem (path,active,title,glyph,text)" class="nav-item"
+                    th:classappend="${active==menu ? 'active' : ''}">
+                    <a th:href="@{__${path}__}" th:title="${title}" class="nav-link"
+                       th:classappend="${active==menu ? 'active' : ''}"
+                       th:aria-current="${active==menu ? 'page' : ''}">
+                        <i th:class="'bi bi-' + ${glyph}" aria-hidden="true"></i>
                         <span th:text="${text}">Template</span>
                     </a>
                 </li>
 
-                <li th:replace="::menuItem ('/','home','home page','home','Home')" class="nav-item">
-                    <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                <li th:replace="::menuItem ('/','home','home page','house','Home')" class="nav-item">
                     <span>Home</span>
                 </li>
 
                 <li th:replace="::menuItem ('/customers/find','customers','find customers','search','Customers')"class="nav-item">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                    <span>Find Customer</span>
                 </li>
 
                 <li th:replace="::menuItem ('/beers/find','beers','find beers','search','Find beers')" class="nav-item">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                    <span>Find Beer</span>
                 </li>
 
-                <li th:replace="::menuItem ('/brewery/breweries','breweries','breweries','th-list','Breweries')" class="nav-item">
-                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                    <span>Breweries</span>
+                <li th:replace="::menuItem ('/brewery/breweries','breweries','breweries','building','Breweries')" class="nav-item">
                 </li>
             </ul>
         </div>
@@ -79,8 +73,6 @@
     </div>
 </div>
 
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 
 </body>
