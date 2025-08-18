@@ -4,14 +4,13 @@
       th:fragment="layout (template, menu)">
 
 <head>
-
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/resources/images/favicon.png}">
-
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
     <title>SFG Beer Works</title>
 
     <!--[if lt IE 9]>
@@ -20,51 +19,54 @@
     <![endif]-->
 
     <link rel="stylesheet" th:href="@{/resources/css/brewery.css}"/>
-
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" role="navigation">
+        <div class="container-fluid">
+            <a class="navbar-brand" th:href="@{/}"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-end">
+                    <th:block th:remove="all">
+                        <th:block th:fragment="menuItem (path,active,title,glyph,text)">
+                            <li class="nav-item" th:classappend="${active==menu ? 'active' : ''}">
+                                <a th:href="@{__${path}__}" th:title="${title}" class="nav-link"
+                                   th:classappend="${active==menu ? 'active' : ''}"
+                                   th:aria-current="${active==menu ? 'page' : ''}">
+                                    <i th:class="'bi bi-' + ${glyph}" aria-hidden="true"></i>
+                                    <span th:text="${text}">Template</span>
+                                </a>
+                            </li>
+                        </th:block>
+                    </th:block>
 
-<nav class="navbar navbar-expand-lg bg-body-dark" role="navigation">
-    <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/}"><span></span></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-navbar"
-                aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="navbar-collapse collapse" id="main-navbar">
-            <ul class="navbar-nav justify-content-end">
-                <li th:fragment="menuItem (path,active,title,glyph,text)" class="nav-item"
-                    th:classappend="${active==menu ? 'active' : ''}">
-                    <a th:href="@{__${path}__}" th:title="${title}" class="nav-link"
-                       th:classappend="${active==menu ? 'active' : ''}"
-                       th:aria-current="${active==menu ? 'page' : ''}">
-                        <i th:class="'bi bi-' + ${glyph}" aria-hidden="true"></i>
-                        <span th:text="${text}">Template</span>
-                    </a>
-                </li>
+                    <li th:replace="~{::menuItem ('/','home','home page','house','Home')}" class="nav-item">
+                        <span>Home</span>
+                    </li>
 
-                <li th:replace="::menuItem ('/','home','home page','house','Home')" class="nav-item">
-                    <span>Home</span>
-                </li>
+                    <li sec:authorize="hasAuthority('customer.create')"
+                        th:replace="~{::menuItem ('/customers/find','customers','find customers','search','Customers')}"
+                        class="nav-item">
+                    </li>
 
-                <li sec:authorize="hasAuthority('customer.create')" th:replace="::menuItem ('/customers/find','customers','find customers','search','Customers')"class="nav-item">
-                </li>
+                    <li th:replace="~{::menuItem ('/beers/find','beers','find beers','search','Find beers')}" class="nav-item">
+                    </li>
 
-                <li th:replace="::menuItem ('/beers/find','beers','find beers','search','Find beers')" class="nav-item">
-                </li>
-
-                <li sec:authorize="(hasAnyAuthority('order.read','customer.order.read'))" th:replace="::menuItem ('/brewery/breweries','breweries','breweries','building','Breweries')" class="nav-item">
-                </li>
-            </ul>
+                    <li sec:authorize="(hasAnyAuthority('order.read','customer.order.read'))"
+                        th:replace="~{::menuItem ('/brewery/breweries','breweries','breweries','building','Breweries')}"
+                        class="nav-item">
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 <div class="container-fluid">
     <div class="container xd-container">
-
-        <th:block th:include="${template}"/>
-
+        <th:block th:insert="${template}"/>
         <br/>
         <br/>
         <div class="container">
@@ -75,7 +77,7 @@
     </div>
 </div>
 
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
 </body>
 

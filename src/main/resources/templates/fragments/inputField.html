@@ -6,15 +6,15 @@
             <label class="form-label" th:text="${label}">Label</label>
             <div>
                 <div th:switch="${type}">
-                    <input th:case="'text'" class="form-control" type="text" th:field="*{__${name}__}"
+                    <input th:case="'text'" class="form-control border" type="text" th:field="*{__${name}__}"
                            th:classappend="${!#fields.hasErrors(name) ? '' : 'is-invalid'}" />
-                    <input th:case="'number'" class="form-control" type="number" th:field="*{__${name}__}"
+                    <input th:case="'number'" class="form-control border" type="number" th:field="*{__${name}__}"
                            th:classappend="${!#fields.hasErrors(name) ? '' : 'is-invalid'}" />
-                    <input th:case="'monetory'" class="form-control" type="text" th:field="*{__${name}__}"
+                    <input th:case="'monetory'" class="form-control border" type="text" th:field="*{__${name}__}"
                            pattern="[0-9]+(\.[0-9][0-9]?)?"
                            th:classappend="${!#fields.hasErrors(name) ? '' : 'is-invalid'}" />
 
-                    <input th:case="'date'" class="form-control" type="date" th:field="*{__${name}__}"
+                    <input th:case="'date'" class="form-control border" type="date" th:field="*{__${name}__}"
                            placeholder="YYYY-MM-DD" title="Enter a date in this format: YYYY-MM-DD"
                            th:classappend="${!#fields.hasErrors(name) ? '' : 'is-invalid'}" />
                 </div>

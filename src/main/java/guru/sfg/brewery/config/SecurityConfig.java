@@ -4,11 +4,14 @@ import guru.sfg.brewery.security.JpaUserDetailsService;
 import guru.sfg.brewery.security.RestHeaderAuthFilter;
 import guru.sfg.brewery.security.RestUrlAuthFilter;
 import guru.sfg.brewery.security.SfgPasswordEncoderFactories;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationEventPublisher;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.DefaultAuthenticationEventPublisher;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -19,18 +22,24 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
+
+import javax.sql.DataSource;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true)
+@RequiredArgsConstructor
 public class SecurityConfig {
 
-    @Autowired
-    JpaUserDetailsService jpaUserDetailsService;
+
+    private final JpaUserDetailsService jpaUserDetailsService;
+    private final DataSource dataSource;
 
     public RestHeaderAuthFilter restHeaderAuthFilter(RequestMatcher matcher, AuthenticationManager authenticationManager) {
         RestHeaderAuthFilter filter = new RestHeaderAuthFilter(matcher);
@@ -70,7 +79,7 @@ public class SecurityConfig {
                                 .anyRequest().authenticated()
 
                 )
-                .formLogin(loginConfigurer -> {
+                    .formLogin(loginConfigurer -> {
                     loginConfigurer
                             .loginProcessingUrl("/login")
                             .loginPage("/").permitAll()
@@ -82,6 +91,18 @@ public class SecurityConfig {
                             .logoutRequestMatcher(PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, "/logout"))
                             .logoutSuccessUrl("/?logout").permitAll();
                 })
+                .rememberMe(rememberMeConfigurer -> rememberMeConfigurer
+                        .tokenRepository(persistentTokenRepository())
+                            .key("sfg-guru")
+                            .tokenValiditySeconds(60 * 60 * 24 * 30)
+                )
+//                .rememberMe(rememberMeConfigurer ->
+//                        rememberMeConfigurer.key("sfg-guru").tokenValiditySeconds(60 * 60 * 24 * 30))
+//                .exceptionHandling(ex -> ex
+//                        .accessDeniedHandler((request, response, accessDeniedException) -> {
+//                            response.sendRedirect(request.getContextPath() + "/?error=forbidden");
+//                        })
+//                )
                 .httpBasic(withDefaults());
         http.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)); // do not use in production, allows H2 console to work
         return http.build();
@@ -92,6 +113,11 @@ public class SecurityConfig {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider(this.jpaUserDetailsService);
         authenticationProvider.setPasswordEncoder(this.passwordEncoder());
         return new ProviderManager(authenticationProvider);
+    }
+
+    @Bean
+    AuthenticationEventPublisher authenticationEventPublisher(ApplicationEventPublisher eventPublisher, ApplicationEventPublisher applicationEventPublisher){
+        return new DefaultAuthenticationEventPublisher(applicationEventPublisher);
     }
 
 //    @Bean
@@ -116,6 +142,13 @@ public class SecurityConfig {
 //                        .build()
 //        );
 //    }
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+        tokenRepository.setDataSource(dataSource);
+        return tokenRepository;
+    }
 
     @Bean
     PasswordEncoder passwordEncoder() {
