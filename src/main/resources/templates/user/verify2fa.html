@@ -12,7 +12,7 @@
         <form th:action="@{/user/verify2fa}" class="" id="verify-code-form" method="post">
             <div class="mb-3">
                 <label for="verifyCode">Enter Code</label>
-                <input type="text" class="form-control" id="verifyCode" name="verifyCode" autofocus="autofocus" autocomplete="off"/>
+                <input type="text" class="form-control border border-dark" id="verifyCode" name="verifyCode" autofocus="autofocus" autocomplete="off"/>
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
             </div>
             <div class="mb-3">

@@ -74,10 +74,10 @@
         <!--Surefire plugin argLine value to suppress UnresolvedMavenProperty -->
         <!-- Removed unsupported JVM argument -->
         <!-- Web dependencies -->
-        <webjars-bootstrap.version>5.3.7</webjars-bootstrap.version>
-        <webjars-jquery-ui.version>1.14.1</webjars-jquery-ui.version>
-        <webjars-jquery.version>3.7.1</webjars-jquery.version>
-        <wro4j.version>2.1.1</wro4j.version>
+<!--        <webjars-bootstrap.version>5.3.7</webjars-bootstrap.version>-->
+<!--        <webjars-jquery-ui.version>1.14.1</webjars-jquery-ui.version>-->
+<!--        <webjars-jquery.version>3.7.1</webjars-jquery.version>-->
+<!--        <wro4j.version>2.1.1</wro4j.version>-->
     </properties>
 
     <dependencies>
@@ -121,20 +121,20 @@
             <version>${org.mapstruct.version}</version>
         </dependency>
         <!-- webjars -->
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>webjars-locator-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>jquery</artifactId>
-            <version>${webjars-jquery.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>jquery-ui</artifactId>
-            <version>${webjars-jquery-ui.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.webjars</groupId>-->
+<!--            <artifactId>webjars-locator-core</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.webjars</groupId>-->
+<!--            <artifactId>jquery</artifactId>-->
+<!--            <version>${webjars-jquery.version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.webjars</groupId>-->
+<!--            <artifactId>jquery-ui</artifactId>-->
+<!--            <version>${webjars-jquery-ui.version}</version>-->
+<!--        </dependency>-->
         <!-- end of webjars -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

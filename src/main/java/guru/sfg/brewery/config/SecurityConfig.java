@@ -69,6 +69,7 @@ public class SecurityConfig {
 //                .addFilterBefore(google2faFilter, SessionManagementFilter.class)
                 .addFilterBefore(restHeaderAuthFilter(apiMatcher, authenticationManager), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(restUrlAuthFilter(apiMatcher, authenticationManager), UsernamePasswordAuthenticationFilter.class)
+                .cors(withDefaults())
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**", "/api/**"))
                 .authorizeHttpRequests((authorizeHttpRequests) ->
                                 authorizeHttpRequests

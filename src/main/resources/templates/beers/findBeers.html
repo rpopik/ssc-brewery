@@ -11,7 +11,7 @@
 
     <div class="col-md-6">
         <label for="beerName" class="form-label">Beer name</label>
-        <input id="beerName" class="form-control" type="text" th:field="*{beerName}"
+        <input id="beerName" class="form-control border border-dark" type="text" th:field="*{beerName}"
                maxlength="80"
                th:classappend="${#fields.hasErrors('beerName') ? 'is-invalid' : ''}" />
         <div th:if="${#fields.hasErrors('beerName')}" class="invalid-feedback">
@@ -20,13 +20,13 @@
     </div>
 
     <div class="col-12">
-        <button type="submit" class="btn btn-primary">Find Beer</button>
+        <button type="submit" class="btn btn-secondary">Find Beer</button>
     </div>
 
 </form>
 
 <br />
-<a sec:authorize="hasAuthority('beer.create')" class="btn btn-primary" th:href="@{/beers/new}">Add Beer</a>
+<a sec:authorize="hasAuthority('beer.create')" class="btn btn-secondary" th:href="@{/beers/new}">Add Beer</a>
 
 </body>
 </html>

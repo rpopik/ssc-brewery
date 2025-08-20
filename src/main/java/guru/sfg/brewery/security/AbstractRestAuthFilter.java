@@ -7,6 +7,8 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+import org.springframework.boot.autoconfigure.security.servlet.StaticResourceRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,12 +16,17 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import java.io.IOException;
 
 @Slf4j
 public abstract class AbstractRestAuthFilter extends AbstractAuthenticationProcessingFilter {
+
+    private final RequestMatcher urlResources = PathPatternRequestMatcher.withDefaults().matcher("/resources/**");
+    StaticResourceRequest.StaticResourceRequestMatcher staticResourceRequestMatcher = PathRequest.toStaticResources().atCommonLocations();
+
     protected AbstractRestAuthFilter(RequestMatcher requiresAuthenticationRequestMatcher) {
         super(requiresAuthenticationRequestMatcher);
     }
@@ -51,6 +58,11 @@ public abstract class AbstractRestAuthFilter extends AbstractAuthenticationProce
             throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
+
+        if (urlResources.matches(request) || staticResourceRequestMatcher.matches(request)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         if (logger.isDebugEnabled()) {
             logger.debug("Request is to process authentication");

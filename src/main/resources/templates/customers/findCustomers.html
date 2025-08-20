@@ -10,7 +10,7 @@
 
     <div class="col-md-6">
         <label for="customerName" class="form-label">Customer name</label>
-        <input id="customerName" class="form-control" type="text" th:field="*{customerName}"
+        <input id="customerName" class="form-control border border-dark" type="text" th:field="*{customerName}"
                maxlength="80"
                th:classappend="${#fields.hasErrors('customerName') ? 'is-invalid' : ''}" />
         <div th:if="${#fields.hasErrors('customerName')}" class="invalid-feedback">

@@ -19,7 +19,7 @@
         <form th:action="@{/user/register2fa}" class="" id="verify-code-form" method="post">
             <div class="mb-3">
                 <label for="verifyCode">Enter code</label>
-                <input type="text" id="verifyCode" name="verifyCode" class="form-control"/>
+                <input type="text" id="verifyCode" name="verifyCode" class="form-control border border-dark"/>
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
             </div>
             <div class="mb-3">

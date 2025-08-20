@@ -16,7 +16,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "scss": "sass --source-map src/main/sass:target/classes/static/resources/css"
+    "scss": "sass --source-map src/main/sass:target/classes/static/resources/css --style=compressed"
   },
   "dependencies": {
     "bootstrap": "^5.3.7",

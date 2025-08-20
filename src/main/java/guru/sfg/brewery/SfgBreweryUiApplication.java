@@ -19,6 +19,7 @@ package guru.sfg.brewery;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+//@SpringBootApplication(exclude = {SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class})
 @SpringBootApplication
 public class SfgBreweryUiApplication {
 
@@ -27,4 +28,3 @@ public class SfgBreweryUiApplication {
     }
 
 }
-
