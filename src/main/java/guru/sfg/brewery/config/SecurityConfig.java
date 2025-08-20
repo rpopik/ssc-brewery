@@ -74,7 +74,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorizeHttpRequests) ->
                                 authorizeHttpRequests
                                         .requestMatchers("/h2-console/**").permitAll() // do not use in production
-                                        .requestMatchers("/", "/login", "/webjars/**", "/resources/**").permitAll()
+                                        .requestMatchers("/", "/login", "/resources/**").permitAll()
 //                                .requestMatchers("/beers/find", "/beers/{beerId}").hasAnyRole("ADMIN","CUSTOMER", "USER")
 //                                .requestMatchers(HttpMethod.GET, "/api/v1/beer/**").permitAll()
 //                                .requestMatchers(HttpMethod.GET, "/api/v1/beerUpc/{upc}").hasAnyRole("ADMIN","CUSTOMER", "USER")
