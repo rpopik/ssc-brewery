@@ -8,3 +8,21 @@ You can learn more about the courses here:
 * [Spring Framework 5: Beginner to Guru](https://www.udemy.com/course/spring-framework-5-beginner-to-guru/?referralCode=6D9ECD1F93988FEE5CE9)
 * [Testing Spring Boot: Beginner to Guru](https://www.udemy.com/course/testing-spring-boot-beginner-to-guru/?referralCode=EFFE87DDE96C8541B2EE)
 * [Apache Maven: Beginner to Guru](https://www.udemy.com/course/apache-maven-beginner-to-guru/?referralCode=0B91047D034706031F51)
+
+Rich's notes:
+
+* Updated to Spring Boot v3.5.3
+* kept RestHeaderAuthFilter and RestUrlAuthFilter for future reference
+* Renamed User to Users because user is a reserved word in H2 now.
+* fixed mappers
+* updated bootstrap to v5.3.7
+* added bootstrap-icons
+* removed jquery
+* removed jquery-ui
+* removed webjars
+* converted from less to scss
+* removed wro4j
+* added frontend maven plugin to enable node and npm for sass generation.
+  - usage: mvn frontend:install-node-and-npm
+  - sass will then be generated when mvn generate-resources target is run
+* left a ton of commented code to use as a future quick reference guide
