@@ -10,7 +10,7 @@ You can learn more about the courses here:
 * [Apache Maven: Beginner to Guru](https://www.udemy.com/course/apache-maven-beginner-to-guru/?referralCode=0B91047D034706031F51)
 
 Rich's notes:
-
+* Updated to Spring Security v6.5.1
 * Updated to Spring Boot v3.5.3
 * kept RestHeaderAuthFilter and RestUrlAuthFilter for future reference
 * Renamed User to Users because user is a reserved word in H2 now.
