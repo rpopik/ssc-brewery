@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/resources/images/favicon.png}">
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/resources/css/bootstrap.min.css}" />
     <title>SFG Beer Works</title>
 
     <!--[if lt IE 9]>
@@ -30,7 +30,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="navbar-collapse collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-end">
+                <ul class="navbar-nav mb-2 mb-lg-0 justify-content-end">
                     <th:block th:remove="all">
                         <th:block th:fragment="menuItem (path,active,title,glyph,text)">
                             <li class="nav-item" th:classappend="${active==menu ? 'active' : ''}">
@@ -60,6 +60,10 @@
                         th:replace="~{::menuItem ('/brewery/breweries','breweries','breweries','building','Breweries')}"
                         class="nav-item">
                     </li>
+
+                    <li th:replace="~{::menuItem ('/user/register2fa', 'user', 'register', 'th-list', 'Enable 2FA')}"
+                        class="nav-item">
+                    </li>
                 </ul>
             </div>
         </div>
@@ -77,7 +81,7 @@
     </div>
 </div>
 
-    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src = "@{/resources/js/bootstrap.bundle.min.js}"></script>
 
 </body>
 

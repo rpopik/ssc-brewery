@@ -135,11 +135,6 @@
             <artifactId>jquery-ui</artifactId>
             <version>${webjars-jquery-ui.version}</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.webjars</groupId>-->
-<!--            <artifactId>bootstrap</artifactId>-->
-<!--            <version>${webjars-bootstrap.version}</version>-->
-<!--        </dependency>-->
         <!-- end of webjars -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -159,6 +154,11 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-data</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.warrenstrange</groupId>
+            <artifactId>googleauth</artifactId>
+            <version>1.5.0</version>
         </dependency>
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>

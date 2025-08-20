@@ -4,6 +4,7 @@ import guru.sfg.brewery.security.JpaUserDetailsService;
 import guru.sfg.brewery.security.RestHeaderAuthFilter;
 import guru.sfg.brewery.security.RestUrlAuthFilter;
 import guru.sfg.brewery.security.SfgPasswordEncoderFactories;
+import guru.sfg.brewery.security.google.Google2faFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
@@ -40,6 +41,7 @@ public class SecurityConfig {
 
     private final JpaUserDetailsService jpaUserDetailsService;
     private final DataSource dataSource;
+    private final Google2faFilter google2faFilter;
 
     public RestHeaderAuthFilter restHeaderAuthFilter(RequestMatcher matcher, AuthenticationManager authenticationManager) {
         RestHeaderAuthFilter filter = new RestHeaderAuthFilter(matcher);
@@ -59,27 +61,29 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http , AuthenticationManager authenticationManager) throws Exception {
+
         PathPatternRequestMatcher apiMatcher = PathPatternRequestMatcher.withDefaults().matcher("/api/**");
         http
 //                .csrf(AbstractHttpConfigurer::disable)
+//                .addFilterBefore(google2faFilter, SessionManagementFilter.class)
                 .addFilterBefore(restHeaderAuthFilter(apiMatcher, authenticationManager), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(restUrlAuthFilter(apiMatcher, authenticationManager), UsernamePasswordAuthenticationFilter.class)
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**", "/api/**"))
                 .authorizeHttpRequests((authorizeHttpRequests) ->
-                        authorizeHttpRequests
-                                .requestMatchers("/h2-console/**").permitAll() // do not use in production
-                                .requestMatchers("/", "/login", "/webjars/**", "/resources/**").permitAll()
+                                authorizeHttpRequests
+                                        .requestMatchers("/h2-console/**").permitAll() // do not use in production
+                                        .requestMatchers("/", "/login", "/webjars/**", "/resources/**").permitAll()
 //                                .requestMatchers("/beers/find", "/beers/{beerId}").hasAnyRole("ADMIN","CUSTOMER", "USER")
 //                                .requestMatchers(HttpMethod.GET, "/api/v1/beer/**").permitAll()
 //                                .requestMatchers(HttpMethod.GET, "/api/v1/beerUpc/{upc}").hasAnyRole("ADMIN","CUSTOMER", "USER")
 //                                .requestMatchers(HttpMethod.DELETE, "/api/v1/beer/**").hasRole("ADMIN")
 //                                .requestMatchers(HttpMethod.GET, "/brewery/breweries/**").hasAnyRole("ADMIN","CUSTOMER")
 //                                .requestMatchers(HttpMethod.GET, "/brewery/api/v1/breweries").hasAnyRole("ADMIN","CUSTOMER")
-                                .anyRequest().authenticated()
+                                        .anyRequest().authenticated()
 
                 )
-                    .formLogin(loginConfigurer -> {
+                .formLogin(loginConfigurer -> {
                     loginConfigurer
                             .loginProcessingUrl("/login")
                             .loginPage("/").permitAll()
@@ -93,8 +97,8 @@ public class SecurityConfig {
                 })
                 .rememberMe(rememberMeConfigurer -> rememberMeConfigurer
                         .tokenRepository(persistentTokenRepository())
-                            .key("sfg-guru")
-                            .tokenValiditySeconds(60 * 60 * 24 * 30)
+                        .key("sfg-guru")
+                        .tokenValiditySeconds(60 * 60 * 24 * 30)
                 )
 //                .rememberMe(rememberMeConfigurer ->
 //                        rememberMeConfigurer.key("sfg-guru").tokenValiditySeconds(60 * 60 * 24 * 30))
@@ -116,7 +120,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    AuthenticationEventPublisher authenticationEventPublisher(ApplicationEventPublisher eventPublisher, ApplicationEventPublisher applicationEventPublisher){
+    AuthenticationEventPublisher authenticationEventPublisher(ApplicationEventPublisher eventPublisher, ApplicationEventPublisher applicationEventPublisher) {
         return new DefaultAuthenticationEventPublisher(applicationEventPublisher);
     }
 
